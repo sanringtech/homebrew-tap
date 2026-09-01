@@ -16,12 +16,16 @@ cask "haul" do
 
   app "SanringHaul.app"
 
-  # Unsigned, unnotarized build (see RISKS.md on the main repo) — Homebrew still strips the
-  # quarantine attribute on cask-installed apps, which is most of what "right-click → Open"
-  # would otherwise be working around.
+  # Unsigned, unnotarized build (see RISKS.md on the main repo). Checked by hand after a real
+  # `brew install --cask haul` (2026-09-01): the installed .app still carries com.apple.quarantine
+  # — this Homebrew version does NOT strip it for casks, so Gatekeeper still blocks a Finder
+  # double-click same as a manually-downloaded .dmg would. Don't repeat the "brew handles this
+  # for you" assumption without re-verifying against whatever brew version is current then.
   caveats do
     <<~EOS
       sanring Haul is not code-signed or notarized yet (v0.1.0, small-scale sharing stage).
+      Gatekeeper will still block the first launch — right-click the app in Finder and choose
+      "Open", or run: xattr -d com.apple.quarantine /Applications/SanringHaul.app
       Full risk disclosure: https://github.com/sanringtech/haul/blob/main/RISKS.md
     EOS
   end

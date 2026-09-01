@@ -7,6 +7,7 @@ official `homebrew-cask` repo (see each cask's source repo for why).
 
 ```bash
 brew tap sanringtech/tap
+brew trust sanringtech/tap   # newer Homebrew refuses third-party taps until trusted
 brew install --cask haul
 ```
 
